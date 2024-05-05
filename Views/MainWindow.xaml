@@ -79,12 +79,52 @@
                 </Viewbox>
                 
             </Button>
-       
+            
+            <!--List View for tasks-->
+            <ListView Grid.Row="2"
+                      Background="Transparent"
+                      Margin="0 20"
+                      BorderBrush="Transparent">
+            </ListView>
+
+        </Grid>
+
+        <!--Task Viewer-->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="230"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            
+            <!--Task details-->
+            <Grid Margin="20 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Task Title"
+                           Style="{StaticResource Title}"
+                           VerticalAlignment="Center"/>
+                <Border HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Padding="20 5"
+                        CornerRadius="5"
+                        Background="{StaticResource Improtance-Crit}">
+                    <TextBlock Text="Critical"
+                               Foreground="{StaticResource OnAccent}"
+                               FontWeight="Bold"/>
+                </Border>
+                        
+            </Grid>
+            
         </Grid>
         
         <!--Task status-->
         <Rectangle Fill="{StaticResource TaskStatusBackground}"
-                   Grid.Column="2"/>
+                   Grid.Column="3"/>
 
 
 
