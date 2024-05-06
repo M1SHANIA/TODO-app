@@ -16,6 +16,19 @@
     <SolidColorBrush x:Key="OnAccent" Color="#FFFFFFFF"/>
     <!--On Accent Dark-->
     <SolidColorBrush x:Key="OnAccentDark" Color="#FF8E8E8E"/>
+    <!--Placeholder Text colour-->
+    <SolidColorBrush x:Key="PlaceholderText" Color="#FF5A5A5A"/>
+    
+    <!--BTn colours-->
+    <SolidColorBrush x:Key="Button.Complete" Color="#FF2AD985"/>
+    <SolidColorBrush x:Key="Button.Complete.Over" Color="#FF2AD985"/>
+    <SolidColorBrush x:Key="Button.Complete.Click" Color="#FF2A9A64"/>
+    <SolidColorBrush x:Key="Button.Edit" Color="#FF565656"/>
+    <SolidColorBrush x:Key="Button.Edit.Over" Color="#FF6B6B6B"/>
+    <SolidColorBrush x:Key="Button.Edit.Click" Color="#FF2D2D2D"/>
+    <SolidColorBrush x:Key="Button.Delete" Color="#FFCA2C2C"/>
+    <SolidColorBrush x:Key="Button.Delete.Over" Color="#FFC85050"/>
+    <SolidColorBrush x:Key="Button.Delete.Click" Color="#FF9C0C0C"/>
 
     <!--Borders-->
     <SolidColorBrush x:Key="Borders" Color="#FFCCCCCC"/>
@@ -23,8 +36,8 @@
     <!--Importance colours-->    
     <SolidColorBrush x:Key="Improtance-Low" Color="#FF00A0E9"/>
     <SolidColorBrush x:Key="Improtance-Med" Color="#FF2AD985"/>
-    <SolidColorBrush x:Key="Improtance-High" Color="#FFCA2C2C"/>
-    <SolidColorBrush x:Key="Improtance-Crit" Color="#FFF4B30C"/>
+    <SolidColorBrush x:Key="Improtance-Crit" Color="#FFCA2C2C"/>
+    <SolidColorBrush x:Key="Improtance-High" Color="#FFF4B30C"/>
     
     
     <!--Task Status colours-->

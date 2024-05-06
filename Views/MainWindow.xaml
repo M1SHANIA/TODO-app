@@ -104,22 +104,86 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-
+                
+            <!--Task title-->
                 <TextBlock Text="Task Title"
                            Style="{StaticResource Title}"
                            VerticalAlignment="Center"/>
+                
+                <!--Importance badge-->
                 <Border HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Padding="20 5"
                         CornerRadius="5"
                         Background="{StaticResource Improtance-Crit}">
                     <TextBlock Text="Critical"
-                               Foreground="{StaticResource OnAccent}"
-                               FontWeight="Bold"/>
+                               Foreground="Black"
+                               FontWeight="Normal"
+                               FontSize="16"
+                    />
+                    
                 </Border>
-                        
+                <!--Description-->
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                <TextBlock Text="This is a short description"
+                           Grid.Row="1"
+                           FontSize="16"
+                           Foreground="{StaticResource PlaceholderText}"
+                           Margin="0 20"/>
+                </ScrollViewer>
+                
+                <!--Due date-->
+                <TextBlock Text="Due: 12/12/2021"
+                           Background="{StaticResource AccentDark}"
+                           Padding="20 3"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Grid.Row="2"
+                           Foreground="White"/>
+
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  Margin="0 20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                
+                <!--List Title-->
+                <TextBlock Style="{StaticResource Title}"
+                           Text="Task Check List"
+                           VerticalAlignment="Center"
+                           Margin="20 0 0 0"/>
+            <!--Check list-->
+            <ListView
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Grid.Row="1">
+            </ListView>
             </Grid>
             
+            <!--Task View Buttons-->
+            <Grid Grid.Row="2">
+                <Button Style="{StaticResource TaskViewCompleteButton}" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Content="Complete"
+                        Margin="0 0 20 0"/>
+                
+                <Button Style="{StaticResource TaskViewEditButton}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Content="Edit"/>
+               
+                <Button Style="{StaticResource TaskViewDeleteButton}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Content="Delete"
+                        Margin="20 0 0 0"/>
+            </Grid>
         </Grid>
         
         <!--Task status-->
