@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="WpfApp1.Views.TaskListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="145" d:DesignWidth="435">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        
+        <!--Title-->
+        <TextBlock Text="Title" Style="{StaticResource Title}" 
+                   Margin="20 0"
+                   VerticalAlignment="Center"
+                   Foreground="{StaticResource TaskListUCTitle}"/>
+        
+        <!--ImportanceBadge-->
+        <Border CornerRadius="3" Background="{StaticResource PlaceholderBorder}" 
+                Padding="40 0"
+                Height="23"
+                HorizontalAlignment="Right"
+                Margin="0 0 20 0">
+            <TextBlock Text="Importance" Foreground="{StaticResource PlaceholderBorderText}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+            
+        </Border>
+
+        <!--Description-->
+        <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sed auctor nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc magna diam, accumsan a ligula sed, faucibus imperdiet metus. Nullam pulvinar, lorem vitae commodo malesuada, metus dui maximus arcu, sit amet facilisis mi est id ipsum."
+                   TextWrapping="Wrap"
+                   Grid.Row="1"
+                   Margin="20 5 0 0"
+                   Foreground="{StaticResource TaskListUCText}"/>
+        
+        <!--Due date-->
+        <TextBlock Text="Due date: 12/12/2021"
+                   Grid.Row="2"
+                   Margin="20 0"
+                   VerticalAlignment="Center"
+                   Foreground="{StaticResource TaskListUCText}"/>
+
+    </Grid>
+</UserControl>
