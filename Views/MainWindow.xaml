@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:WpfApp1.ViewModels"
-        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:local="clr-namespace:WpfApp1.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="832" Width="1280"
         MinWidth="1150" MinHeight="450"
@@ -44,25 +44,7 @@
 
         <!--Nav-->
         <Rectangle Fill="{StaticResource AccentDark}"   />
-        <StackPanel Margin="10 15 10 10">
-            <Button Style="{StaticResource TaskManagerNavBtn}" Width="40">
-                <Viewbox Width="30" Height="30">
-                    <Path Data="{StaticResource ListIcon}" Fill="White"/>
-                </Viewbox>
-            </Button>
-            <Button Style="{StaticResource TaskManagerNavBtn}" Width="40">
-                <Viewbox Margin="-14,-22,2,2">
-                    <Path Data="{StaticResource TickIcon}" Fill="White"/>
-                </Viewbox>
-            </Button>
-            <Button Style="{StaticResource TaskManagerNavBtn}" Width="40">
-                <Viewbox Margin="-8,-5,4,1">
-                    <Path Data="{StaticResource TimerIcon}" Fill="White"/>
-                </Viewbox>
-            </Button>
-
-
-        </StackPanel>
+        
 
         <!--Task list bg -->
         <Rectangle Fill="{StaticResource TaskListBackground}"
@@ -90,6 +72,9 @@
                     Width="40"
                     Margin="0 0 20 0"
                     Command="{Binding IOpenNewWindow}">
+                <Button.DataContext>
+                    <vm:MainWindowViewModel/>
+                </Button.DataContext>
                 <!--Icon-->
                 <Viewbox Width="20"
                          Height="20">
@@ -100,8 +85,10 @@
             <!--Search bar-->
             <TextBox x:Name="TaskSearchBox" 
                     Style="{StaticResource TaskListSearchBox}" 
-                     Grid.Row="1"
-                     Margin="20 0"/>
+                    Grid.Row="1"
+                    Margin="20 0"
+                    Text="{Binding TaskViewModel.SearchText, UpdateSourceTrigger=PropertyChanged}"/>   
+
             <Label IsHitTestVisible="False"
                    Content="Search Tasks..."
                    Grid.Row="1"
@@ -127,11 +114,20 @@
 
             </Button>
 
+
             <!--List View for tasks-->
             <ListView Grid.Row="2"
-                      Background="Transparent"
-                      Margin="-1,20,1,20"
-                      BorderBrush="Transparent">
+          ItemsSource="{Binding TaskViewModel.FilteredTasks}"
+          SelectedItem="{Binding TaskViewModel.SelectedTask}"
+          Background="Transparent"
+          Margin="-1,20,1,20"
+          BorderBrush="Transparent">
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:TaskListItem/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
 
         </Grid>
@@ -153,44 +149,32 @@
                 </Grid.RowDefinitions>
 
                 <!--Task title-->
-                <TextBlock Text="Task Title"
-                           Style="{StaticResource Title}"
-                           VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding TaskViewModel.SelectedTask.Title}"
+               Style="{StaticResource Title}"
+               VerticalAlignment="Center"/>
 
-                <!--Importance badge-->
-                <Border HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Padding="20 5"
-                        CornerRadius="5"
-                        Background="{StaticResource Improtance-Crit}">
-                    <TextBlock Text="Critical"
-                               Foreground="White"
-                               FontWeight="Normal"
-                               FontSize="12"
-                    />
-
-                </Border>
                 <!--Description-->
                 <ScrollViewer Grid.Row="1"
-                              VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled">
-                    <TextBlock Text="This is a short description"
-                           Grid.Row="1"
-                           FontSize="16"
-                           Foreground="{StaticResource PlaceholderText}"
-                           Margin="0 20"/>
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+                    <TextBlock Text="{Binding TaskViewModel.SelectedTask.Description}"
+                   Grid.Row="1"
+                   FontSize="16"
+                   Foreground="{StaticResource PlaceholderText}"
+                   Margin="0 20"/>
                 </ScrollViewer>
 
                 <!--Due date-->
-                <TextBlock Text="Due: 12/12/2021"
-                           Background="{StaticResource AccentDark}"
-                           Padding="20 3"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left"
-                           Grid.Row="2"
-                           Foreground="White"/>
-
+                <TextBlock Text="{Binding TaskViewModel.SelectedTask.DueDate, StringFormat='Due: {0:dd/MM/yyyy}'}"
+               Background="{StaticResource AccentDark}"
+               Padding="20 3"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Left"
+               Grid.Row="2"
+               Foreground="White"/>
             </Grid>
+
+
 
             <Grid Grid.Row="1"
                   Margin="0 20">
@@ -214,22 +198,24 @@
 
             <!--Task View Buttons-->
             <Grid Grid.Row="2">
-                <Button Style="{StaticResource TaskViewCompleteButton}" 
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Content="Complete"
-                        Margin="0 0 20 0"/>
+               
 
                 <Button Style="{StaticResource TaskViewEditButton}"
-                        HorizontalAlignment="Center"
+                        Command="{Binding TaskViewModel.EditTaskCommand}"
+                        HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Content="Edit"/>
 
                 <Button Style="{StaticResource TaskViewDeleteButton}"
+                        DataContext="{Binding TaskViewModel}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Content="Delete"
-                        Margin="20 0 0 0"/>
+                        Margin="20 0 0 0"
+                        Command="{Binding DeleteTaskCommand}"
+                        CommandParameter="{Binding SelectedTask}"/> 
+
+
             </Grid>
         </Grid>
 

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using WpfApp1.ViewModels;
 
 namespace WpfApp1.Models
 {
@@ -18,6 +21,13 @@ namespace WpfApp1.Models
         public TaskStatus TaskStatus { get; set; }
         public TaskCategory TaskCategory { get; set; }
         public TaskImportance TaskImportance { get; set; }
+
+        public ObservableCollection<TaskChecklist> TaskChecklist { get; set; }
+
+        private void AddNewTask()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum TaskStatus

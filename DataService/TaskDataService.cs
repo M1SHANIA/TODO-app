@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
 using WpfApp1.Models;
 
 namespace WpfApp1.DataService
@@ -41,23 +40,23 @@ namespace WpfApp1.DataService
             // If the file doesn't exist, create it and write an empty JSON array to it
             if (!File.Exists(_filePath))
             {
-                File.WriteAllText(_filePath, JsonConvert.SerializeObject(new List<Task>()));
+                File.WriteAllText(_filePath, JsonSerializer.Serialize(new List<Task>()));
             }
             // Open the folder containing the file (for debugging purposes)
-            Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), folderName));
+            //Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), folderName));
         }
 
         // Load tasks from the file
         public List<Task> LoadTasks()
         {
             string fileContent = File.ReadAllText(_filePath);
-            return JsonConvert.DeserializeObject<List<Task>>(fileContent);
+            return JsonSerializer.Deserialize<List<Task>>(fileContent);
         }
 
         // Save tasks to the file
         public void SaveTasks(List<Task> tasks)
         {
-            string json = JsonConvert.SerializeObject(tasks, Formatting.Indented);
+            string json = JsonSerializer.Serialize(tasks, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(_filePath, json);
         }
 
@@ -103,7 +102,7 @@ namespace WpfApp1.DataService
                 tasks.RemoveAll(t => t.Id == taskId);
                 SaveTasks(tasks);
             }
-        }   
+        }
 
         // Generate a new ID for a task
         public int GenerateId()

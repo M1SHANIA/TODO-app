@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp1.ViewModels;
 
 namespace WpfApp1.Views
 {
@@ -22,6 +23,15 @@ namespace WpfApp1.Views
         public NewTaskWindow()
         {
             InitializeComponent();
+
+            DataContext = new TaskViewModel();
+        }
+        public event Action TaskAdded = delegate { };
+        private void AddTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            // ... код добавления новой задачи ...
+
+            TaskAdded.Invoke();
         }
     }
 }

@@ -3,11 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1.Views"
+        xmlns:local="clr-namespace:WpfApp1.Views" 
+        xmlns:viewmodels="clr-namespace:WpfApp1.ViewModels" 
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        xmlns:models="clr-namespace:WpfApp1.Models" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:TaskViewModel}"
         mc:Ignorable="d"
         Title="NewTaskWindow" Height="800" Width="544"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="TaskCategoryValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="models:TaskCategory" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="200"/>
@@ -17,7 +29,7 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="20 0">
+        <Grid Grid.Row="0" Margin="0 0 20 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="150"/>
@@ -28,15 +40,21 @@
                  VerticalAlignment="Center"
                  BorderBrush="{StaticResource Borders}"
                  BorderThickness="1"
-                 Margin="0,0,20,0" Height="30"/>
-            <Label Content="Task Title..."
-              Margin="0,10,0,10"
-               Visibility="{Binding Text.isEmpty, ElementName=TaskTitle, Converter={StaticResource BooleanToVisibilityConverter}}"
-               IsHitTestVisible="False"/>
+                 Margin="0,0,20,0" Height="30"
+                     Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label IsHitTestVisible="False"
+                   Content="Title"
+                   Grid.Row="1"
+                   VerticalAlignment="Center"
+                   Margin="40 0 0 0"
+                   Foreground="{StaticResource Borders}"
+                   Visibility="{Binding Text.IsEmpty, ElementName=TaskSearchBox, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <!--Importance Combo box-->
             <ComboBox Grid.Column="1"
-                  VerticalAlignment="Center"
-                  Padding="0 10"/>
+          VerticalAlignment="Center"
+          Padding="0 10"
+          ItemsSource="{Binding Source={StaticResource TaskCategoryValues}}"
+          SelectedItem="{Binding Task.Category, Mode=TwoWay}"/>
         </Grid>
         <!--Desc box-->
         <TextBox x:Name="TaskDesc" 
@@ -44,7 +62,7 @@
              Style="{StaticResource NewTextBox}"
              BorderThickness="1"
              VerticalAlignment="Center"
-             Margin="20,0,20,0" Height="180"
+             Margin="0,0,20,0" Height="180"
              IsInactiveSelectionHighlightEnabled="True"
              IsUndoEnabled="True"
              AcceptsReturn="True"
@@ -53,7 +71,8 @@
              VerticalContentAlignment="Top"
              HorizontalContentAlignment="Left"
              TextAlignment="Left"
-             BorderBrush="{StaticResource Borders}"/>
+             BorderBrush="{StaticResource Borders}"
+                Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
         <Label Content="Task Title..."
                Grid.Row="1"
               Margin="20 10"
@@ -70,7 +89,7 @@
                  VerticalAlignment="Center"
                  BorderBrush="{StaticResource Borders}"
                  BorderThickness="1"
-                 Margin="20,0,10,0" Height="30"/>
+                 Margin="0,0,10,0" Height="30"/>
 
             <Button
                     Style="{StaticResource TaskViewEditButton}"
@@ -88,7 +107,7 @@
         </Grid>
 
         <Grid Grid.Row="3" >
-            <ListView Style="{StaticResource Checklist}" Margin="20,0,20,0"/>
+            <ListView Style="{StaticResource Checklist}" Margin="0,0,20,0"/>
         </Grid>
         <Grid Grid.Row="4">
             <Grid.RowDefinitions>
@@ -97,14 +116,15 @@
             </Grid.RowDefinitions>
             <StackPanel Margin="0,4,0,46" Grid.RowSpan="2">
                 <StackPanel Orientation="Horizontal"
-                            Margin="20 5"
+                            Margin="0 5"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left">
                     <TextBlock Text="Due: "
                            VerticalAlignment="Center"
                            Margin="0 0 20 0"/>
                     <DatePicker VerticalAlignment="Center"
-                                Margin="0 0 20 0"/>
+                                Margin="0 0 20 0"
+                                SelectedDate="{Binding DueDate, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Text="@" Margin="0 0 20 0"
                                VerticalAlignment="Center"/>
                     <ComboBox SelectedIndex="0" MinWidth="60"/>
@@ -120,7 +140,7 @@
 
             <Grid Grid.Row="1">
                 <CheckBox Content="Include Timer (You can time how long a project takes with a stop watch)."
-                          Margin="20 0 0 0"
+                          Margin="0 0 0 0"
                           VerticalAlignment="Center"/>
             </Grid>
 
@@ -131,7 +151,7 @@
         HorizontalAlignment="Right"
         VerticalAlignment="Center"
         Content="Add task"
-        Margin="0 0 20 0"/>
+        Margin="0 0 20 0" Command="{Binding IAddNewTask}"/>
         </Grid>
 
 
